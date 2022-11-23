@@ -5,13 +5,28 @@ import datetime
 
 
 class BaseModel:
-    """Handles initialization, serialization and deserialization of your future instances"""
-    def __init__(self):
+    """Handles initialization, serialization and deserialization of your future instances
+       Args:
+            *args: arguments(unused)
+            **kwargs(dict): attrubute values   
+    """
+    def __init__(self, *args, **kwargs):
         """Initialization of class instances"""
-        user_id = uuid.uuid4()
-        self.id = str(user_id)
-        self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
+        DATE_TIME_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'
+        if not kwargs:
+            user_id = uuid.uuid4()
+            self.id = str(user_id)
+            self.created_at = datetime.datetime.now()
+            self.updated_at = datetime.datetime.now()
+        else:
+            for key, value in kwargs.items():
+                if key in ("updated_at", "created_at"):
+                    self.__dict__[key] = datetime.strptime(
+                        value, DATE_TIME_FORMAT)
+                elif key[0] == "id":
+                    self.__dict__[key] = str(value)
+                else:
+                    self.__dict__[key] = value
 
     def __str__(self):
         """Override string representation of class instance"""
