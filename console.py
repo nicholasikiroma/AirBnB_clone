@@ -3,7 +3,9 @@
 
 import cmd
 import sys
+from models.base_model import BaseModel
 
+NEW_CLASS = {"BaseModel": BaseModel}
 
 class HBNBCommand(cmd.Cmd):
     """Defines the entry point for the command interpreter"""
@@ -21,6 +23,19 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """Do nothing when empty line is passed"""
         pass
+
+    def do_create(self, arg):
+        """Creates a new instance of Model"""
+        if not arg:
+            print("** class name missing **")
+
+        elif arg not in NEW_CLASS:
+            print("** class doesn't exist **")
+
+        else:
+            new_instance = BaseModel()
+            new_instance.save()
+            print(new_instance.id)
 
 
 if __name__ == '__main__':
