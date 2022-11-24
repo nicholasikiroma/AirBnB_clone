@@ -22,6 +22,9 @@ class BaseModel:
             models.storage.new(self)
         else:
             for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+
                 if key in ("updated_at", "created_at"):
                     self.__dict__[key] = datetime.datetime.strptime(
                         value, DATE_TIME_FORMAT)
