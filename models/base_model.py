@@ -19,6 +19,7 @@ class BaseModel:
             self.id = str(user_id)
             self.created_at = datetime.datetime.now()
             self.updated_at = datetime.datetime.now()
+            models.storage.new(self)
         else:
             for key, value in kwargs.items():
                 if key in ("updated_at", "created_at"):

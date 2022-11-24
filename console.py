@@ -3,9 +3,7 @@
 
 import cmd
 import sys
-from models.base_model import BaseModel
-
-NEW_CLASS = {"BaseModel": BaseModel}
+import models
 
 class HBNBCommand(cmd.Cmd):
     """Defines the entry point for the command interpreter"""
@@ -29,11 +27,11 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
 
-        elif arg not in NEW_CLASS:
+        elif arg not in models.default_classes:
             print("** class doesn't exist **")
 
         else:
-            new_instance = BaseModel()
+            new_instance = models.BaseModel()
             new_instance.save()
             print(new_instance.id)
 
