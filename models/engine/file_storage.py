@@ -5,6 +5,7 @@ import datetime
 import json
 import os
 import models
+from models.user import User
 
 class FileStorage:
     """class for serialization and deserialization of base classes."""
