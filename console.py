@@ -5,6 +5,7 @@ import cmd
 import sys
 import models
 
+
 class HBNBCommand(cmd.Cmd):
     """Defines the entry point for the command interpreter"""
     prompt = '(hbnb) '
@@ -31,7 +32,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
         else:
-            new_instance = models.BaseModel()
+            new_instance = models.default_classes[arg]
+            new_instance = new_instance()
             new_instance.save()
             print(new_instance.id)
 
@@ -107,7 +109,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
-        
+
         arg = line.split()
 
         if line:
