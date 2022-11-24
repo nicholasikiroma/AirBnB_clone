@@ -22,7 +22,7 @@ class BaseModel:
         else:
             for key, value in kwargs.items():
                 if key in ("updated_at", "created_at"):
-                    self.__dict__[key] = datetime.strptime(
+                    self.__dict__[key] = datetime.datetime.strptime(
                         value, DATE_TIME_FORMAT)
                 elif key[0] == "id":
                     self.__dict__[key] = str(value)
