@@ -67,12 +67,7 @@ class HBNBCommand(cmd.Cmd):
                     key = f"{arg[0]}.{arg[1]}"
                     try:
                         print(models.storage.all()[key])
-<<<<<<< HEAD
-
                     except KeyError:
-=======
-                    except:
->>>>>>> 64629a3c8b4490fa2348a0f72aec0f73b3c01397
                         print("** no instance found **")
                 else:
                     print("** instance id missing **")
@@ -108,10 +103,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """Prints all string representation of all instances"""
-<<<<<<< HEAD
-
-=======
->>>>>>> 64629a3c8b4490fa2348a0f72aec0f73b3c01397
         all_obj = []
         if line:
             arg = line.split()
@@ -126,16 +117,12 @@ class HBNBCommand(cmd.Cmd):
         else:
             for key, instance in models.storage.all().items():
                 all_obj.append(str(instance))
-<<<<<<< HEAD
 
-=======
->>>>>>> 64629a3c8b4490fa2348a0f72aec0f73b3c01397
         if all_obj:
             print(all_obj)
 
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
-
         arg = line.split()
 
         if line:
@@ -159,10 +146,6 @@ class HBNBCommand(cmd.Cmd):
                             print("** value missing **")
                     else:
                         print("** attribute name missing **")
-<<<<<<< HEAD
-
-=======
->>>>>>> 64629a3c8b4490fa2348a0f72aec0f73b3c01397
                 else:
                     print("** instance id missing **")
             else:
@@ -170,7 +153,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
-<<<<<<< HEAD
 
     def default(self, line):
         """
@@ -183,7 +165,6 @@ class HBNBCommand(cmd.Cmd):
                 <class name>.update(<id>, <attribute name>, <attribute value>)
                 <class name>.update(<id>, <dictionary representation>)
         """
-
         match_pattern = re.fullmatch(r"[A-zA-z]+\.[a-z]+\(.*?\)", line)
 
         if match_pattern:
@@ -217,8 +198,5 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("*** Unknown syntax: {}".format(line))
 
-=======
-
->>>>>>> 64629a3c8b4490fa2348a0f72aec0f73b3c01397
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
