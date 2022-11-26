@@ -10,7 +10,8 @@ from models.state import State
 
 default_classes = {"BaseModel": BaseModel, "User": User,
                    "State": State, "City": City,
-                   "Amenity": Amenity, "Place": Place, "Review": Review}
+                   "Amenity": Amenity, "Place": Place,
+                   "Review": Review}
 
 storage = FileStorage()
 storage.reload()
