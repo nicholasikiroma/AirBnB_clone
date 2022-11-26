@@ -9,7 +9,7 @@ The project currently only implements the back-end console.
 
 BaseModel  FileStorage  User  State  City  Amenity  Place  Review
 
-## Storage :baggage_claim:
+## Storage
 
 The above classes are handled by the abstracted storage engine defined in the 
 [FileStorage](./models/engine/file_storage.py) class.
