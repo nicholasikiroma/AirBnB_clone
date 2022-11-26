@@ -73,7 +73,3 @@ folder.
 
 Alternatively, you can specify a single test file to run at a time:
 
-
-## Authors
-* **Nicholas Ikiroma** <[nicholasikiroma](https://github.com/nicholasikiroma/)>
-* **Getachew Yazie** <[Getachew7](https://github.com/Getachew7/)>
