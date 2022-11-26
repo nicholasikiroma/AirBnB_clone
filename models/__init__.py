@@ -8,8 +8,10 @@ from models.city import City
 from models.review import Review
 from models.state import State
 
-default_classes = {"BaseModel": BaseModel, "User":User, "State": State, "City": City,
-                    "Amenity": Amenity, "Place": Place, "Review": Review}
+default_classes = {"BaseModel": BaseModel, "User": User,
+                   "State": State, "City": City,
+                   "Amenity": Amenity, "Place": Place,
+                   "Review": Review}
 
 storage = FileStorage()
 storage.reload()
