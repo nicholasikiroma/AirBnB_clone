@@ -4,12 +4,27 @@
 import cmd
 import sys
 import models
+import re
 
 
 class HBNBCommand(cmd.Cmd):
     """Defines the entry point for the command interpreter"""
     prompt = '(hbnb) '
     ruler = '='
+
+    def get_command(self, arg):
+        """Checks for available commands
+            Args:
+                arg: name of command
+        """
+        commands = {"all": HBNBCommand.do_all, "show": HBNBCommand.do_show,
+                    "destroy": HBNBCommand.do_destroy,
+                    "update": HBNBCommand.do_update}
+
+        if arg in commands:
+            return commands[arg]
+        else:
+            return
 
     def do_quit(self, line):
         """Exists console"""
@@ -42,9 +57,10 @@ class HBNBCommand(cmd.Cmd):
            Args:
                 line: CLI arguments
         """
-        arg = line.split(' ')
+
 
         if line:
+            arg = line.split()
 
             if arg[0] in models.default_classes:
                 if len(arg) > 1:
@@ -52,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
                     try:
                         print(models.storage.all()[key])
 
-                    except:
+                    except KeyError:
                         print("** no instance found **")
                 else:
                     print("** instance id missing **")
@@ -76,7 +92,8 @@ class HBNBCommand(cmd.Cmd):
                     try:
                         models.storage.all().pop(key)
                         models.storage.save()
-                    except:
+
+                    except KeyError:
                         print("** no instance found **")
                 else:
                     print("** instance id missing **")
@@ -87,7 +104,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """Prints all string representation of all instances"""
-        
+
         all_obj = []
 
         if line:
@@ -103,7 +120,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             for key, instance in models.storage.all().items():
                 all_obj.append(str(instance))
-        
+
         if all_obj:
             print(all_obj)
 
@@ -125,19 +142,66 @@ class HBNBCommand(cmd.Cmd):
                             try:
                                 setattr(models.storage.all()[key], arg[2], arg[3].strip('"'))
                                 models.storage.save()
-                            except:
+
+                            except KeyError:
                                 print("** no instance found **")
                         else:
                             print("** value missing **")
                     else:
                         print("** attribute name missing **")
- 
+
                 else:
                     print("** instance id missing **")
             else:
                 print("** class doesn't exist **")
         else:
             print("** class name missing **")
+
+
+    def default(self, line):
+        """
+            Handles special commands.
+
+            Usage:
+                <class name>.all()
+                <class name>.show(<id>)
+                <class name>.destroy(<id>)
+                <class name>.update(<id>, <attribute name>, <attribute value>)
+                <class name>.update(<id>, <dictionary representation>)
+        """
+
+        match_pattern = re.fullmatch(r"[A-zA-z]+\.[a-z]+\(.*?\)", line)
+
+        if match_pattern:
+
+            args = line.split('.')
+            if args[0] in models.default_classes:
+
+                params = args[1].split("(")
+                params[1] = params[1].strip(")")
+                items = params[1].split(",")
+                items = [arg.strip() for arg in items]
+
+                if len(items) >= 3:
+                    temp = items[2]
+                    items = [arg.strip('"') for arg in items[:2]]
+                    items.append(temp)
+
+                else:
+                    items = [arg.strip('"') for arg in items]
+                command = self.get_command(params[0])
+
+                if command:
+                    valid_args = [arg for arg in items]
+                    valid_args.insert(0, args[0])
+                    valid_command = " ".join(valid_args)
+                    command(self, valid_command)
+                else:
+                    print("*** Unknown syntax: {}".format(line))
+            else:
+                print("** class doesn't exist **")
+        else:
+            print("*** Unknown syntax: {}".format(line))
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
