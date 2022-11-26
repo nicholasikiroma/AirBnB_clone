@@ -19,7 +19,8 @@ class HBNBCommand(cmd.Cmd):
         """
         commands = {"all": HBNBCommand.do_all, "show": HBNBCommand.do_show,
                     "destroy": HBNBCommand.do_destroy,
-                    "update": HBNBCommand.do_update}
+                    "update": HBNBCommand.do_update,
+                    "count": HBNBCommand.count}
 
         if arg in commands:
             return commands[arg]
@@ -57,8 +58,6 @@ class HBNBCommand(cmd.Cmd):
            Args:
                 line: CLI arguments
         """
-
-
         if line:
             arg = line.split()
 
@@ -123,9 +122,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
-        arg = line.split()
-
         if line:
+            arg = line.split()
 
             if arg[0] in models.default_classes:
                 if len(arg) > 1:
@@ -153,6 +151,24 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
+    def count(self, line):
+        """Returns the number of instances of a class"""
+        obj_count = 0
+        if line:
+            arg = line.split()
+            if arg[0] in models.default_classes:
+                for key, instance in models.storage.all().items():
+                    if key.split('.')[0] == arg[0]:
+                        obj_count += 1
+
+                    else:
+                        ("** no insance found **")
+            else:
+                ("** class doesn't exist **")
+        else:
+            ("** class name missing **")
+
+        print(obj_count)
 
     def default(self, line):
         """
@@ -197,6 +213,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
         else:
             print("*** Unknown syntax: {}".format(line))
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
