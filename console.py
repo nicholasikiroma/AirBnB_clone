@@ -127,23 +127,23 @@ class HBNBCommand(cmd.Cmd):
 
             if arg[0] in models.default_classes:
                 if len(arg) > 1:
+                    key = f"{arg[0]}.{arg[1]}"
+                    try:
+                        class_instance = models.storage.all()[key]
+                        if len(arg) > 2:
 
-                    if len(arg) > 2:
+                            if len(arg) > 3:
 
-                        if len(arg) > 3:
-
-                            key = f"{arg[0]}.{arg[1]}"
-                            try:
-                                setattr(models.storage.all()[key],
+                                setattr(class_instance,
                                         arg[2], arg[3].strip('"'))
-                                models.storage.save()
-
-                            except KeyError:
-                                print("** no instance found **")
+                                class_instance.save()
+                            else:
+                                print("** value missing **")
                         else:
-                            print("** value missing **")
-                    else:
-                        print("** attribute name missing **")
+                            print("** attribute name missing **")
+
+                    except KeyError:
+                        print("** no instance found **")
                 else:
                     print("** instance id missing **")
             else:
