@@ -14,26 +14,24 @@ class BaseModel():
     """
     def __init__(self, *args, **kwargs):
         """Initialization of class instances"""
-        DATE_TIME_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'
+        ISO = '%Y-%m-%dT%H:%M:%S.%f'
 
         if kwargs:
-            for key in kwargs.items():
+            for key in kwargs:
                 if key == "__class__":
                     continue
 
                 elif key in ("created_at", "updated_at"):
                     setattr(self, key,
-                            datetime.datetime.strptime(kwargs[key], DATE_TIME_FORMAT))
+                            datetime.datetime.strptime(kwargs[key], ISO))
                 else:
                     setattr(self, key, kwargs[key])
 
         else:
-            user_id = uuid.uuid4()
-            self.id = str(user_id)
+            self.id = str(uuid.uuid4)
             self.created_at = datetime.datetime.now()
             self.updated_at = datetime.datetime.now()
             models.storage.new(self)
-    
 
     def __str__(self):
         """Override string representation of class instance"""
