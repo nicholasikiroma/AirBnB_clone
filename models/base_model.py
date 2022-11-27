@@ -28,7 +28,8 @@ class BaseModel():
                     setattr(self, key, kwargs[key])
 
         else:
-            self.id = str(uuid.uuid4)
+            user_id = uuid.uuid4()
+            self.id = str(user_id)
             self.created_at = datetime.datetime.now()
             self.updated_at = datetime.datetime.now()
             models.storage.new(self)
