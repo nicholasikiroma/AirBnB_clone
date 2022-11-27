@@ -2,7 +2,6 @@
 """Module for FileStorage class."""
 
 import json
-import os
 import models
 
 
@@ -36,7 +35,7 @@ class FileStorage:
 
         try:
 
-            with open(self.__file_path, "r", encoding="utf-8") as f:
+            with open(self.__file_path, "r") as f:
                 obj_dict = json.load(f)
 
             for k, v in obj_dict.items():
