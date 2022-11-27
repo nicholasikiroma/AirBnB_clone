@@ -29,7 +29,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, line):
         """Exists console"""
-        return sys.exit()
+        return True
 
     def do_EOF(self, line):
         """Exits console"""
